@@ -2,6 +2,7 @@ services:
   - type: web
     name: job-automation-backend
     env: node
+    nodeVersion: 20
     buildCommand: cd backend && npm ci && npm run build
     startCommand: cd backend && npm start
     envVars:
