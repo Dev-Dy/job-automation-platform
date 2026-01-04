@@ -5,6 +5,7 @@ import { useState } from 'react';
 interface Opportunity {
   id: number;
   title: string;
+  description?: string;
   source: string;
   score: number;
   url: string;
