@@ -6,13 +6,13 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
 
-# Install dependencies
+# Install ALL dependencies (including devDependencies for TypeScript build)
 RUN npm ci
 
 # Copy source code
 COPY src ./src
 
-# Build TypeScript
+# Build TypeScript to JavaScript
 RUN npm run build
 
 # Production stage
@@ -23,13 +23,13 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies only
-RUN npm ci --only=production
+# Install ONLY production dependencies (no TypeScript needed - already built)
+RUN npm ci --omit=dev
 
-# Copy built files from builder
+# Copy built JavaScript files from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Create data directory
+# Create data directory for SQLite database
 RUN mkdir -p /app/data
 
 # Expose port
